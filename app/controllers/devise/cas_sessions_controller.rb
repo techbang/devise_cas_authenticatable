@@ -5,6 +5,7 @@ class Devise::CasSessionsController < Devise::SessionsController
     unloadable
   end
 
+  skip_before_filter :sync_fb_user
   skip_before_filter :verify_authenticity_token, :only => [:single_sign_out]
 
   def new
