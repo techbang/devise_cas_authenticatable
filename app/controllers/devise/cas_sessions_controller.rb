@@ -41,8 +41,8 @@ class Devise::CasSessionsController < Devise::SessionsController
     # in such case we destroy the session here
     if signed_in?(resource_name)
       cookies.delete :auth_token, :domain => auth_token_domain
-      cookies.delete :_trm, :domain => request.host.slice(/(staging.)*techbang.(com|dev)$/)
-      cookies.delete :_tun, :domain => request.host.slice(/(staging.)*techbang.(com|dev)$/)
+      cookies.delete :_trm, :domain => request.host.slice(/(staging.)*techbang.(com|test)$/)
+      cookies.delete :_tun, :domain => request.host.slice(/(staging.)*techbang.(com|test)$/)
 
       store_location!
 
@@ -77,7 +77,7 @@ class Devise::CasSessionsController < Devise::SessionsController
   private
 
   def auth_token_domain
-    Rails.env.development? ? ".techbang.dev" : ".techbang.com"
+    Rails.env.development? ? ".techbang.test" : ".techbang.com"
   end
 
   def read_session_index
@@ -158,7 +158,7 @@ class Devise::CasSessionsController < Devise::SessionsController
   end
 
   def referer_from_pcadv_url
-    request.referer if request.referer && request.referer.match(/pcadv((\.|\-)staging)?\.techbang\.(dev|com)/)
+    request.referer if request.referer && request.referer.match(/pcadv((\.|\-)staging)?\.techbang\.(test|com)/)
   end
 
 end
