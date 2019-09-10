@@ -1,8 +1,9 @@
 class Devise::CasSessionsController < Devise::SessionsController
   include DeviseCasAuthenticatable::SingleSignOut::DestroySession
+  unloadable if Rails::VERSION::MAJOR < 4 # Rails 5 no longer requires this
 
+  # rails 5 unsupport skip_before_filter and skip_before_action need defined raise, see t18786
   if Rails::VERSION::MAJOR < 5
-    unloadable # Rails 5 no longer requires this
     skip_before_action :sync_fb_user
     skip_before_action :verify_authenticity_token, :only => [:single_sign_out]
   else
